@@ -42,7 +42,11 @@ const App = () => {
         
       </Route>
 
-      <Route path="/update-movie/:id" component={UpdateMovie} />
+      <Route 
+        path="/update-movie/:id"
+        render={props => {
+          return <UpdateMovie {...props} movieList={movieList} getMovieList={getMovieList} />
+        }}/>
     </>
   );
 };

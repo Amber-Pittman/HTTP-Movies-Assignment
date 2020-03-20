@@ -12,9 +12,10 @@ const initialItem = {
 
 export default function UpdateMovie(props) {
     const [movie, setMovie] = useState(initialItem);
+    console.log(props);
 
     useEffect(() => {
-        const itemToUpdate = props.items.map(item => {
+        const itemToUpdate = props.movieList.find(item => {
             return `${item.id}` === props.match.params.id;
         });
 
@@ -43,17 +44,16 @@ export default function UpdateMovie(props) {
         event.preventDefault();
 
         axios
-            .put("http://localhost:5000/api/movies/", movie)
+            .put(`http://localhost:5000/api/movies/${props.match.params.id}`, movie)
             .then(res => {
                 console.log(res);
-                props.updateMovie(res.data);
-                props.history.push(`/movies`);
-                setMovie(res.data)
+                props.getMovieList();
+                props.history.push(`/`);               
             })
             .catch(err => {
                 console.log(err)
                 throw(err)
-            }, [props.match.params.id])
+            })
     }
 
     return (
