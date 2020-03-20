@@ -26,13 +26,15 @@ export default function UpdateMovie(props) {
 
     const handleChange = (event) => {
         event.persist();
-        let value = event.target.value;
-        if (event.target.name === "stars") {
-            value = parseInt(value, 10);
-        }
+        // This was for numbers. Realized "stars" meant celebrities and
+        //  not movie ratings
+        // let value = event.target.value;
+        // if (event.target.name === "stars") {
+        //     value = parseInt(value, 10);
+        // }
 
         setMovie({
-            ...movie
+            ...movie,
             [event.target.name]: event.target.value
         })
     };
@@ -45,11 +47,11 @@ export default function UpdateMovie(props) {
             .then(res => {
                 console.log(res);
                 props.updateMovie(res.data);
-                props.history.push(`/${movie.id}`);
+                props.history.push(`/movies`);
                 setMovie(res.data)
             })
-            .catch(err = {
-                console.log(err);
+            .catch(err => {
+                console.log(err)
                 throw(err)
             }, [props.match.params.id])
     }
@@ -86,7 +88,7 @@ export default function UpdateMovie(props) {
                     value={movie.stars}
                     onChange={handleChange} />
 
-                <button type="submit">
+                <button type="submit" onClick={handleSubmit}>
                     Update
                 </button>
             </form>
