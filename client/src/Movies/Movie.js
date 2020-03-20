@@ -18,6 +18,19 @@ function Movie({ addToSavedList }) {
     addToSavedList(movie);
   };
 
+  const deleteItem = event => {
+    event.preventDefault();
+
+    axios
+      .delete(`http://localhost:5000/api/movies/${id}`)
+      .then(res => {
+        console.log(res);
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+
   useEffect(() => {
     fetchMovie(match.params.id);
   }, [match.params.id]);
