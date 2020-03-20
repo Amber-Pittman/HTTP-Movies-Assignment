@@ -88,8 +88,11 @@ export default function UpdateMovie(props) {
                     value={movie.stars}
                     onChange={handleChange} />
 
-                <button className="update-button" type="submit" onClick={handleSubmit}>
-                    Update
+                <button 
+                    className="update-button" 
+                    type="submit" 
+                    onClick={handleSubmit}>
+                        Update
                 </button>
             </form>
         </div>

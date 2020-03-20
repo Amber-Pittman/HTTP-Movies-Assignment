@@ -23,7 +23,7 @@ function Movie({ addToSavedList }) {
     event.preventDefault();
 
     axios
-      .delete(`http://localhost:5000/api/movies/${this.props.match.params.id}`)
+      .delete(`http://localhost:5000/api/movies/${props.match.params.id}`)
       .then(res => {
         console.log(res);
 
