@@ -19,7 +19,9 @@ export default function UpdateMovie(props) {
         });
 
         console.log("itemToUpdate", itemToUpdate);
-        setMovie(itemToUpdate);
+        if (itemToUpdate) {
+            setMovie(itemToUpdate);
+        }
     }, [props.items, props.match.params.id]);
 
     const handleChange = (event) => {
@@ -31,12 +33,25 @@ export default function UpdateMovie(props) {
 
         setMovie({
             ...movie
-            [event.target.name]: value
+            [event.target.name]: event.target.value
         })
     };
 
     const handleSubmit = event => {
         event.preventDefault();
+
+        axios
+            .put("http://localhost:5000/api/movies/", movie)
+            .then(res => {
+                console.log(res);
+                props.updateMovie(res.data);
+                props.history.push(`/${movie.id}`);
+                setMovie(res.data)
+            })
+            .catch(err = {
+                console.log(err);
+                throw(err)
+            }, [props.match.params.id])
     }
 
     return (
@@ -67,11 +82,11 @@ export default function UpdateMovie(props) {
                 <input
                     type="text"
                     name="stars"
-                    placeholder="New Stars"
+                    placeholder="New Celebrity"
                     value={movie.stars}
                     onChange={handleChange} />
 
-                <button>
+                <button type="submit">
                     Update
                 </button>
             </form>
