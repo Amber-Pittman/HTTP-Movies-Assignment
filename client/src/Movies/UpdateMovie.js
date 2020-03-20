@@ -14,7 +14,7 @@ export default function UpdateMovie(props) {
     const [movie, setMovie] = useState(initialItem);
 
     useEffect(() => {
-        const itemToUpdate = props.items.find(item => {
+        const itemToUpdate = props.items.map(item => {
             return `${item.id}` === props.match.params.id;
         });
 
@@ -88,7 +88,7 @@ export default function UpdateMovie(props) {
                     value={movie.stars}
                     onChange={handleChange} />
 
-                <button type="submit" onClick={handleSubmit}>
+                <button className="update-button" type="submit" onClick={handleSubmit}>
                     Update
                 </button>
             </form>

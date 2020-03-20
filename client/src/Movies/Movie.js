@@ -22,9 +22,13 @@ function Movie({ addToSavedList }) {
     event.preventDefault();
 
     axios
-      .delete(`http://localhost:5000/api/movies/${id}`)
+      .delete(`http://localhost:5000/api/movies/${this.props.match.params.id}`)
       .then(res => {
         console.log(res);
+
+        console.log("Going to push to new URL")
+        this.props.history.push("/");
+        console.log("Past push to new URL");
       })
       .catch(err => {
         console.log(err)
@@ -50,6 +54,7 @@ function Movie({ addToSavedList }) {
       <button className="delete-button" onClick={deleteItem} >
                 Delete
       </button>
+      <button to={`/update-movie/${movie}`}> Edit </button> 
     </div>
   );
 }
