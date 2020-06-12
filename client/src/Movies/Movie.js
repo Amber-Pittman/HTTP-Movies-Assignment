@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useRouteMatch } from 'react-router-dom';
+import { useRouteMatch, useHistory } from 'react-router-dom';
 import MovieCard from './MovieCard';
 
 function Movie({ addToSavedList }) {
   const [movie, setMovie] = useState(null);
   const match = useRouteMatch();
+  const history = useHistory();
 
   const fetchMovie = id => {
     axios
@@ -17,6 +18,23 @@ function Movie({ addToSavedList }) {
   const saveMovie = () => {
     addToSavedList(movie);
   };
+
+  const deleteItem = event => {
+    event.preventDefault();
+
+    axios
+      .delete(`http://localhost:5000/api/movies/${props.match.params.id}`)
+      .then(res => {
+        console.log(res);
+
+        console.log("Going to push to new URL")
+        this.props.history.push("/");
+        console.log("Past push to new URL");
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
 
   useEffect(() => {
     fetchMovie(match.params.id);
@@ -30,9 +48,16 @@ function Movie({ addToSavedList }) {
     <div className='save-wrapper'>
       <MovieCard movie={movie} />
 
-      <div className='save-button' onClick={saveMovie}>
+      <button className='save-button' onClick={saveMovie}>
         Save
-      </div>
+      </button>
+
+      <button className="delete-button" onClick={deleteItem} >
+                Delete
+      </button>
+      <button onClick={() => {
+        history.push(`/update-movie/${movie.id}`)
+      }}> Edit </button> 
     </div>
   );
 }
